@@ -9,5 +9,15 @@ export const GetPost=()=>{
 }
 //delete method
     export const GetDelete=(id)=>{
-        return api.delete(`/posts/${id}`);
+        return api.delete(`posts/${id}`);
     }
+
+ //add method and that is post method and it is also called create method
+ export const GetAdd=(post)=>{
+    return api.post("/posts",post );
+ }   
+
+ //this is to update the data 
+ export const GetUpdate=(curElem)=>{
+    return api.put(`posts/${curElem.id}`);
+ }
