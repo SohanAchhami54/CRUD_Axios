@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { GetAdd } from "../api/PostApi";
+import { GetAdd, GetUpdate } from "../api/PostApi";
 
 export const Form=({state,setState,update, setUpdate})=>{
     const [form, setForm]=useState({
@@ -7,20 +7,28 @@ export const Form=({state,setState,update, setUpdate})=>{
         body:"",
     });
 
+
+  let isEmpty=Object.keys(update).length===0;
+
+  console.log(isEmpty);
   useEffect(()=>{
-    update && setForm({
+    if(update){
+        setForm({
          title:update.title|| "",
          body:update.body ||"",
-    })
+    });  
+    }
   },[update]);
-    
+
 const handleChange=(e)=>{
     const {name,value}=e.target;
      setForm({...form,[name]:value});
     //  setForm((prev)=>{({...prev,[name]:value})});
 }   
+//add the data to the real server
 const addData=async()=>{
   const res= await GetAdd(form);
+  console.log(res);
   if(res.status===201){
     setState([...state,res.data]);
      setForm({
@@ -28,12 +36,38 @@ const addData=async()=>{
         body:"",
     })
   }
+}
+// update the data at the real server.
+const updateData=async()=>{
+try{
+  const res=await GetUpdate(update.id,form);
+  console.log(res);
+  if(res.status===200){
+      setState((curElem)=>{
+     return curElem.map((curElem)=>{
+      return curElem.id===res.data.id?res.data:curElem;
+     });
+  });
+  setForm({
+       title:"",
+        body:"",
+  })
+  setUpdate({});
+  }
+ 
+}catch(error){
+  console.log(error);
+}
 
 }
 const handleSubmit=(e)=>{
     e.preventDefault();
-    addData();
-   
+    const action=e.nativeEvent.submitter.value;
+    if (action=="Add"){
+        addData();
+    }else{
+      updateData();
+    }
 }
     return(
         <>
@@ -60,7 +94,9 @@ const handleSubmit=(e)=>{
              onChange={handleChange}
              />
 
-             <button type="submit" className="bg-amber-500 px-4 py-2" >Add</button>
+             {/* <button type="submit" className="bg-amber-500 px-4 py-2" >Add</button> */}
+             <button className="bg-amber-500 px-4 py-2" value={isEmpty?"Add":"Update"}>{isEmpty?"Add":"Update"} </button>
+
              </form>
          </section>
          </section>

@@ -18,6 +18,6 @@ export const GetPost=()=>{
  }   
 
  //this is to update the data 
- export const GetUpdate=(curElem)=>{
-    return api.put(`posts/${curElem.id}`);
+ export const GetUpdate=(id,post)=>{
+    return api.put(`posts/${id}`,post);
  }

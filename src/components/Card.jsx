@@ -1,5 +1,5 @@
 
-export const Card=({curElem,handleDelete,handleEdit})=>{
+export const Card=({curElem,handleDelete,handleEdit,index})=>{
     const {id, title, body}=curElem;
 
     return(
@@ -8,7 +8,7 @@ export const Card=({curElem,handleDelete,handleEdit})=>{
         <li className="w-100 min-h-[300px] bg-gray-700 text-amber-50 shadow-2xl rounded-2xl p-6">
         <section className=" flex flex-col gap-4 bg-gray-400">
             {/* <section className="flex flex-col"> */}
-                   <h1>{id}.</h1>
+                   <h1>{index+1}.</h1>
                    <p>Title: {title}</p>
                    <p>News: {body} </p>
                    <section className="grid grid-cols-2 gap-10 px-10">

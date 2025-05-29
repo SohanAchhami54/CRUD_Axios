@@ -53,14 +53,14 @@ const handleEdit=(curElem)=>{
 // }
   return(
     <>
-    <h1 className="text-7xl">Hello my name is sohan achhami.</h1>   
+
     <Form state={state} setState={setState} update={update}  setUpdate={setUpdate} />  
 
     <ul className="flex flex-wrap justify-center items-center gap-6 px-4 py-6">
     {
-      state.map((curElem)=>{
+      state.map((curElem,index)=>{
         return(
-          <Card key={curElem.id} curElem={curElem} handleDelete={handleDelete} handleEdit={handleEdit} />
+          <Card key={curElem.id} index={index} curElem={curElem} handleDelete={handleDelete} handleEdit={handleEdit} />
         );
       })
     }
